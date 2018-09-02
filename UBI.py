@@ -3,6 +3,10 @@ from UBI_classes import *
 #when I have multiple utility functions in future maybe comment out ones I'm not using
 from util_Cobb_Douglas import *
 
+#when I have multiple production functions in future maybe comment out ones I'm not using
+#from prod_linear import *
+#sadly I think linear fundamentally doesn't work. needs to have increasing marginal costs
+from prod_ln import *
 
 
 #START MAIN
@@ -13,6 +17,7 @@ num_consumers  = 2
 num_sellers = 1
 
 starting_wage = 15
+prevailing_wage = starting_wage
 
 consumer_array = []
 seller_array = []
@@ -24,6 +29,10 @@ Utility = Cobb_Douglas_Utility
 Build_Demand_Curve = Cobb_Douglas_Build_Demand_Curve
 
 
+#set names of production functions from modules
+Load_Production_Params = Ln_Production_Load_Params
+Load_Cost_Params = Ln_Production_Load_Cost_Params
+Build_Supply_Curve = Ln_Build_Supply_Curve
 
 #creating consumers
 for i in range(num_consumers):
@@ -59,9 +68,11 @@ for i in range(num_consumers):
 	#self.prices_paid = []
 
 
+#!!!!!!!!!!!!I bet the below is something i probably need to do a lot
+#!!!!!!!!!!!! so the surve aggregation is something i should at some point pull our and put into a function maybe? 
+# not yet though
 
-
-#now building the total demand curve from the individual demand curves
+#now building the total goods demand curve from the individual demand curves
 total_demand = []
 for i in range(num_sellers + 1):
 	total_demand.append({})
@@ -72,14 +83,52 @@ for i in range(num_sellers + 1):
 
 
 
-
-
-
-
-
 #creating sellers
 for i in range(num_sellers):
 	seller_array.append(Seller(i))
+
+
+
+
+#loading Sellers with initial values
+#I should probably move some / all /most of this into modules, either classes or utility
+for i in range(num_sellers):
+	seller_array[i].number = i
+	seller_array[i].production_params = Load_Production_Params()
+	seller_array[i].cost_params = Load_Cost_Params()
+	
+	
+	#this one sets up supply, maybe also should move
+	#setting parrementers ehre but need to move elsewhere
+	min_price = 1
+	max_price = 200
+	price_step = 1
+	seller_array[i].supply_curve = Build_Supply_Curve(min_price, max_price, price_step, 
+	                                                  seller_array[i].cost_params, 
+	                                                  seller_array[i].production_params, prevailing_wage)
+
+
+#right so now with supply and demand curves need to find price + quantities of all the goods
+	
+
+
+
+
+
+
+
+
+
+#then do the labor market with prices fixed
+#add labor demand curves on firm side, built assuming fixed prices
+#then agreegate to overall labor demand curve
+#add labor supply curves on consumer side 
+#then a ggregate to overall labor supply
+
+
+
+
+
 
 ### tests
 

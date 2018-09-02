@@ -46,7 +46,17 @@ def Cobb_Douglas_Build_Demand_Curve(min_price, max_price, price_step, income, al
 
 
 
+#build labor supply curve? here elsewhere?
+#I suppose build it for each customer segment then aggregate
 
+def Cobb_Douglas_Build_Labor_Supply_Curve(min_wage, max_wage, wage_step, fixed_income, alpha):
+	labor_supply={} #trying this as dictionary
+	# could do this with a while look and make step work the way it
+	for wage in range(min_wage,max_wage):
+		demand_leisure = alpha * (40 * wage + fixed_income) / wage
+		labor_provided  = max(0, 40 - max(1,demand_leisure) )
+		labor_supply[wage] = labor_provided
+	return labor_supply
 
 
 
