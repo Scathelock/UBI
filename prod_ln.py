@@ -69,9 +69,41 @@ def Ln_Build_Supply_Curve(min_price, max_price, price_step, cost_param_array, pr
 	
 	
 	
-#build labor demand curve? here elsewhere?
-#I suppose build it for each producer segment then aggregate
+#build labor demand curve assuming good price is fixed
+
+def Ln_Build_Labor_Demand_Curve(min_wage, max_wage, wage_step, cost_param_array, prod_param_array, price):
+
+	#thinking scratch paper
+	#labor demand curve, marginal cost of labor = marginal revenue product
+	#marginal revenue product = units produced by 1 hour * price of unit
+	#units produced per hour is from production param array, price is fixed
+
+	#marginal cost is cost of units produced with L+1 hours - units produced with L hours
+	# cost in total for x units is a + b * x*ln(x)
+	#where b is wage per hour / objects produced per hour
+	#call objects produced per hour, k  call wage per hour w, call hours worked L
+	# total cost (Lhours) = a + w / k * (k*L)*ln (k*L)
+	# total cost (Lhours) = a + w*L*ln(k*L)
+	# marginal cost = the derivative = w(ln(k*L)+1)
+	#https://www.wolframalpha.com/input/?i=derivative+a+%2B+b*x*ln(c*x)
+	#marginal revenue = k * p
+	# k * p = w(ln(k*L)+1)   // goal express L in terms of w
+	#k * p / w = ln(k*L)+1
+	#k * p / w -1 = ln(k*L)
+	#k * p / w -1 = ln(k)+ln(L)
+	#k * p / w -1 - ln(k) = ln(L)
+	#e^( k * p / w -1 - ln(k) ) = L
+
+
+
+	labor_demand={} #trying this as dictionary
+	# could do this with a while look and make step work the way it should
+	units_per_hour = prod_param_array[0]
 	
+	for wage in range(min_wage,max_wage):
+		labor_demand[wage] = math.exp(units_per_hour*price/wage -1 - math.log(units_per_hour))
+	return labor_demand
+
 
 
 

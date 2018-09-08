@@ -9,8 +9,11 @@ class Consumer:
 		self.demand_curves = []
 		self.labor_supply_curve = []
 		
+		#are goods bought and prices paid something I should be tracking, is this duplicative of seller info
 		self.good_bought = []
 		self.prices_paid = []
+		#maybe its fine, tracking in two places might help adding consistency checks later
+		
 		self.hours_worked = 0
 		self.wages_earned = 0
 		self.group_members = 0

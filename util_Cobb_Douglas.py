@@ -60,7 +60,7 @@ def Cobb_Douglas_Build_Labor_Supply_Curve(min_wage, max_wage, wage_step, fixed_i
 
 
 
-
+#load initial values for a customer using this thing
 
 
 
